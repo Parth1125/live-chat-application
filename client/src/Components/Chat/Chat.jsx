@@ -6,6 +6,8 @@ import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import './Chat.css'
 import InfoBar from "../InfoBar/InfoBar";
+import Input from "../Input/Input";
+import Messages from "../Messages/Messages";
 
 let socket;
 
@@ -17,7 +19,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const ENDPOINT = "localhost:3000";
 
-  console.log(name);
+  // console.log(name);
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -26,12 +28,13 @@ const Chat = () => {
 
     setName(name);
     setRoom(room);
-    socket.emit("join", { name, room }, () => {});
+    socket.emit("join", { name, room }, (error) => {
+      if(error){
+        alert(error);
+      }
+    });
 
-    return () => {
-      socket.emit("disconnectt");
-      socket.off();
-    };
+    
   }, [ENDPOINT, location.search]);
 
   useEffect(()=>{
@@ -50,13 +53,14 @@ const Chat = () => {
     }
   }
 
-  console.log(message,messages)
+  // console.log(message,messages)
 
   return (
     <div className="outerContainer">
       <div className="container">
         <InfoBar room={room}/>
-        <input value={message} onChange={(event)=> setMessage(event.target.value)} onKeyPress={event=> event.key === 'Enter'? sendMessage(event):null}/>
+        <Messages messages={messages} name={name}/>
+        <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
 
       </div>
     </div>
