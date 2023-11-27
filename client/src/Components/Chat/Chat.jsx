@@ -17,7 +17,7 @@ const Chat = () => {
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = "localhost:3000";
+  const ENDPOINT = "https://backend-ofon.onrender.com";
 
   // console.log(name);
 
