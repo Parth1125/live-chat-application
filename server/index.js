@@ -11,7 +11,13 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(app);
-const io = socketio(server, { cors: { origin: "https://live-chat-application-6ura.vercel.app/" , methods:["POST","GET"],credentials:true} });
+const io = socketio(server, {
+  cors: {
+    origin: "https://live-chat-application-6ura.vercel.app/",
+    methods: ["POST", "GET"],
+    credentials: true,
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("we have new connection");
@@ -33,7 +39,10 @@ io.on("connection", (socket) => {
 
     socket.join(user.room);
 
-    io.to(user.room).emit('roomData', { room: user.room , users:getUserInRoom(user.room)});
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUserInRoom(user.room),
+    });
 
     callback();
   });
@@ -41,16 +50,22 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (message, callback) => {
     let user = getUser(socket.id);
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
-   
+    io.to(user.room).emit("message", { user: user.name, text: message });
+
     callback();
   });
 
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
-    if(user){
-      io.to(user.room).emit('message', {user:'admin', text:`${user.name} has left`})
-      io.to(user.room).emit('roomData', { room: user.room, users:getUserInRoom(user.room)});
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "admin",
+        text: `${user.name} has left`,
+      });
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUserInRoom(user.room),
+      });
     }
   });
 });
