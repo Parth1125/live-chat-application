@@ -11,7 +11,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(app);
-const io = socketio(server, { cors: { origin: "https://stupendous-smakager-6eddb2.netlify.app/" } });
+const io = socketio(server, { cors: { origin: "https://live-chat-application-6ura.vercel.app/" } });
 
 io.on("connection", (socket) => {
   console.log("we have new connection");
