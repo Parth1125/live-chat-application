@@ -17,7 +17,7 @@ const Chat = () => {
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = "https://live-chat-application-theta.vercel.app/";
+  const ENDPOINT = "https://live-chat-app-n0r1.onrender.com";
 
   // console.log(name);
 
