@@ -11,7 +11,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(app);
-const io = socketio(server, { cors: { origin: "http://localhost:5173" } });
+const io = socketio(server, { cors: { origin: "https://stupendous-smakager-6eddb2.netlify.app/" } });
 
 io.on("connection", (socket) => {
   console.log("we have new connection");
